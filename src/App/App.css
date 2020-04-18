@@ -1,0 +1,27 @@
+.appMain {
+  width: 600px;
+  margin: 30px auto;
+}
+
+.todoList {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+.button {
+  margin: 0px 5px;
+}
+
+.todoItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todoItem:hover {
+  background-color: #ccc;
+  cursor: pointer;
+
+}

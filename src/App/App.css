@@ -13,12 +13,19 @@
 }
 .button {
   margin: 0px 5px;
+
 }
 
 .todoItem {
   display: flex;
   justify-content: space-between;
+  font-size: 22px;
 }
+
+.todoItemCompleted {
+  text-decoration: line-through;
+}
+
 
 .todoItem:hover {
   background-color: #ccc;

@@ -1,57 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import {Button, Input, List, Radio } from 'antd';
-import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import ToDoApp from "./ToDoHeader/ToDoApp";
 
-
+import ToDoFooter from "./ToDoApp/ToDoFooter";
+import ToDoList from "./ToDoList/ToDoList";
+import ToDoHeader from "./ToDoHeader/ToDoHeader";
+import {ITodo} from "./Interfacrs/interfacrs";
 
 const App = () => {
 
-    const data = [
-        'Task 1',
-        'Task 2',
-        'Task 3',
-        'Task 4',
-        'Task 5',
-    ];
 
-  return (
-    <div className="appMain">
+    const [todos, setTodos] = useState<ITodo[]>([]);
 
+    const listAdd = (title: string) => {
+        const newTodo = {
+            id: todos.length+1,
+            title: title,
+            completed: false
+        }
+        setTodos(prev =>[newTodo, ...prev])
+    }
 
-        <div className="todoList">
-            <Input placeholder="Поиск" style={{width: '340px'}}/>
-            <Radio.Group value={'large'} >
-                <Radio.Button value="large">Сделаные</Radio.Button>
-                <Radio.Button value="default">По разделам</Radio.Button>
+    const toggleTodo = (id: number) => {
+        setTodos(prev => prev.map(todo => {
+            if (todo.id === id) {
+                todo.completed = !todo.completed;
+            }
+            return todo;
+        }) )
+    }
 
-            </Radio.Group>
+    const removeTodo = (id: number) => {
+        setTodos(prev => prev.filter(todo => todo.id!==id))
+    }
+
+    return (
+        <div className="appMain">
+            <ToDoHeader/>
+
+            <ToDoList todos={todos} onRemove={removeTodo} onToggle={toggleTodo}/>
+
+            <ToDoFooter onAdd={listAdd}/>
         </div>
-
-        <div>
-            <List
-                size="small"
-
-                bordered
-                dataSource={data}
-                renderItem={
-                    item =>
-                        <List.Item className="todoItem">
-                            <div>
-                                {item}
-                            </div>
-                            <div>
-                                <Button className="button" type="primary" shape="circle" icon={<CheckOutlined />} size={'large'} />
-                                <Button className="button"  shape="circle" icon={<CloseOutlined />} size={'large'} />
-                            </div>
-                        </List.Item>}
-            />
-        </div>
-
-        <ToDoApp />
-    </div>
-  );
+    );
 }
 
 export default App;
